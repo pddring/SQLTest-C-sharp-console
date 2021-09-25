@@ -17,9 +17,10 @@ namespace SQLTest
                 connection.Open();
 
                 bool running = true;
-                Console.WriteLine("SQL Database test. Type exit to quit");
+                Console.WriteLine("SQL Database test. Type exit to quit or write a single line SQL statement");
                 while (running)
                 {
+                    // prompt for SQL or command
                     string input = Console.ReadLine();
                     if (input.ToLower() == "exit")
                     {
@@ -27,10 +28,12 @@ namespace SQLTest
                     }
                     else
                     {
+                        // execute query
                         SqliteCommand cmd = connection.CreateCommand();
                         cmd.CommandText = input;
                         try
                         {
+                            // try to get results
                             using (var reader = cmd.ExecuteReader())
                             {
                                 int fieldCount = reader.FieldCount;
@@ -57,8 +60,10 @@ namespace SQLTest
                                     Console.WriteLine();
                                 }
                             }
+                        
                         } catch(Exception e)
                         {
+                            // display error message if something has gone wrong
                             Console.WriteLine("Error: " + e.Message);
                         }
                     }
